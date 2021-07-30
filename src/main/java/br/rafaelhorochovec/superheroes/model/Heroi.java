@@ -1,11 +1,16 @@
 package br.rafaelhorochovec.superheroes.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 @Entity
 public class Heroi implements Serializable {
@@ -13,19 +18,23 @@ public class Heroi implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Long id;
+
+	@Id
+	@GenericGenerator(name = "uuid2", strategy = "uuid2")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+	@Column(length = 36, nullable = false, updatable = false)
+	@Type(type = "pg-uuid")
+	private UUID id;
 	private String nome;
 	private String nomeHeroi;
 	private String foto;
 	private String universo;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
+
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
